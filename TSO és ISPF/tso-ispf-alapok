@@ -1,0 +1,84 @@
+1️⃣TSO az alap rendszer.
+2️⃣ ISPF egy felhasználói felület a TSO fölött.
+1️⃣  TSO (alapréteg)
+
+operációs környezet z/OS‑en
+parancsok:
+TIME
+LISTA
+ALLOC
+
+
+nincs UI, csak parancsok
+
+👉 ez az „engine”
+
+2️⃣ ISPF (ráépül)
+
+fut TSO alatt
+képernyős UI (panelek)
+menük, EDIT, VIEW, stb.
+
+👉 ez a „felület”
+ISPF:
+
+panelt jelenít meg (DISPLAY PANEL)
+hív TSO‑t:
+ADDRESS TSO "TIME"
+
+
+kezeli:
+
+EDIT
+VIEW
+datasetek
+
+
+
+👉 ISPF = vezérlőréteg
+KAPCSOLAT 
+USER
+ ↓
+ISPF (panelek, UI)
+ ↓
+TSO (parancsok, rendszer)
+ ↓
+z/OS
+
+Parancsok – melyik hova tartozik?
+
+
+
+Parancs                 Hol működik
+  DISPLAY   PANEL(...)  ✅ ISPF
+  EDIT 'dataset(member)'✅ ISPF
+  VIEW 'dataset(member)'✅ ISPF
+  TIME                  ✅ TSO
+  LISTA                 ✅ TSO
+  TSO TIME              ✅ ISPF-ben TSO hívás
+
+✅ 5️⃣ ISPF → TSO hívás
+ISPF‑ben:
+TSO TIME
+
+👉 ez azt jelenti:
+
+kilép röviden ISPF‑ből
+TSO parancsot futtat
+
+
+✅ 6️⃣ REXX-ben ez így néz ki
+REXXADDRESS ISPEXEC   /* ISPF */"DISPLAY PANEL(MYPNL)"ADDRESS TSO       /* TSO */"TIME"Weitere Zeilen anzeigen
+👉 két világ:
+
+ISPF → UI
+TSO → rendszer
+
+összefoglaló
+
+TSO = alap rendszer és parancsok
+ISPF = UI és képernyők
+ISPF a TSO‑ra épül
+REXX mindkettőt használhatja
+
+ISPF a TSO fölé épített interaktív felület, amely panelokkal vezérli a rendszer működését.
